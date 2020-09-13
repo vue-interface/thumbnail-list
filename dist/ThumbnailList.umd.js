@@ -1913,8 +1913,8 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2c5b93b7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ThumbnailList.vue?vue&type=template&id=32225b2a&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"thumbnail-list"},[_c('ol',{class:_vm.classes,style:(_vm.styles)},[_c('thumbnail-list-items',{attrs:{"cover":_vm.cover,"contain":_vm.contain,"fill":_vm.fill,"min-height":_vm.minHeight,"height":_vm.height,"max-height":_vm.maxHeight,"min-width":_vm.minWidth,"width":_vm.width,"max-width":_vm.maxWidth}},[_vm._t("default")],2)],1)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2d18bb11-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ThumbnailList.vue?vue&type=template&id=32225b2a&
+var ThumbnailListvue_type_template_id_32225b2a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"thumbnail-list"},[_c('ol',{class:_vm.classes,style:(_vm.styles)},[_c('thumbnail-list-items',{attrs:{"cover":_vm.cover,"contain":_vm.contain,"fill":_vm.fill,"min-height":_vm.minHeight,"height":_vm.height,"max-height":_vm.maxHeight,"min-width":_vm.minWidth,"width":_vm.width,"max-width":_vm.maxWidth}},[_vm._t("default")],2)],1)])}
 var staticRenderFns = []
 
 
@@ -2285,35 +2285,18 @@ var es_array_map = __webpack_require__("d81d");
       if (!child.data) {
         child.data = {};
       }
-      /*
-      ['height', 'minHeight', 'maxHeight', 'width', 'maxWidth', 'maxHeight']
-          .forEach(style => {
-              child.data.style = Object.assign({
-                  [style]: context.props[style] ? unit(context.props[style]) : undefined
-              }, child.data.style);
-          });
-      */
-
 
       return h('li', {
         style: {
-          /*
           height: context.props.height ? unit(context.props.height) : undefined,
           minHeight: context.props.minHeight ? unit(context.props.minHeight) : undefined,
           maxHeight: context.props.maxHeight ? unit(context.props.maxHeight) : undefined,
           width: context.props.width ? unit(context.props.width) : undefined,
           minWidth: context.props.minWidth ? unit(context.props.minWidth) : undefined,
-          maxWidth: context.props.maxWidth ? unit(context.props.maxWidth) : undefined,
-          */
+          maxWidth: context.props.maxWidth ? unit(context.props.maxWidth) : undefined
         },
         "class": {
           'thumbnail-list-item': true
-          /*
-          'thumbnail-list-contain': !!context.props.contain,
-          'thumbnail-list-cover': !!context.props.cover,
-          'thumbnail-list-fill': !!context.props.fill,
-          */
-
         }
       }, [child]);
     });
@@ -2530,7 +2513,7 @@ var ThumbnailListvue_type_style_index_0_lang_css_ = __webpack_require__("dea0");
 
 var ThumbnailList_component = normalizeComponent(
   src_ThumbnailListvue_type_script_lang_js_,
-  render,
+  ThumbnailListvue_type_template_id_32225b2a_render,
   staticRenderFns,
   false,
   null,
