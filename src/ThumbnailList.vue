@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { unit } from '@vue-interface/utils';
 import ThumbnailListItems from './ThumbnailListItems';
 
 export default {
@@ -36,6 +37,8 @@ export default {
 
         fill: Boolean,
 
+        grid: Boolean,
+
         height: [String, Number],
 
         minHeight: [String, Number],
@@ -50,23 +53,7 @@ export default {
 
         width: [String, Number],
         
-
-        /*
-        fill: Boolean,
-
-        flex: Boolean,
-
-        noFlex: Boolean,
-
-        grid: Boolean,
-
-        wrap: Boolean,
-
-        width: {
-            type: [String, Number],
-            default: 75
-        }
-        */
+        wrap: Boolean
 
     },
 
@@ -74,15 +61,33 @@ export default {
 
         classes() {
             return {
-                'auto-flow-columns': this.rows || !this.cols,
-                'auto-flow-rows': this.cols,
+                'thumbnail-list-contain': this.contain,
+                'thumbnail-list-cover': this.cover,
+                'thumbnail-list-fill': this.fill,
+                'thumbnail-list-grid': this.grid,
+                'thumbnail-list-wrap': this.wrap,
+                'thumbnail-list-auto-flow-columns': !!this.rows
             };
         },
 
+        hasHeight() {
+            return !this.minHeight && !this.maxHeight && !this.height;
+        },
+
+        hasWidth() {
+            return !this.minWidth && !this.maxWidth && !this.width;
+        },
+
+        minmax() {
+            return unit(this.width) || `minmax(${unit(this.minWidth)}, ${this.maxWidth ? unit(this.maxWidth) : '1fr'})`;
+        },
+
         styles() {
+            const wrap = this.grid && this.minmax ? `repeat(${this.cols ? this.cols  : 'auto-fit'}, ${this.minmax})` : undefined;
+
             return {
-                'grid-template-columns': this.cols ? `repeat(${this.cols}, 1fr)` : undefined,
-                'grid-template-rows': this.rows ? `repeat(${this.rows}, 1fr)` : undefined
+                'grid-template-columns': this.grid && this.cols ? `repeat(${this.cols}, 1fr)` : wrap,
+                'grid-template-rows': this.grid && this.rows ? `repeat(${this.rows}, 1fr)` : undefined
             };
         }
 
@@ -95,9 +100,20 @@ export default {
 .thumbnail-list > ol {
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-gap: .5rem;
     width: 100%;
+    grid-gap: .5rem;
+}
+
+.thumbnail-list > ol:not(.thumbnail-list-grid) {
+    display: flex;
+}
+
+.thumbnail-list > ol.thumbnail-list-wrap:not(.thumbnail-list-grid) {
+    flex-wrap: wrap;
+}
+
+.thumbnail-list-grid {
+    display: grid;
 }
 
 .thumbnail-list > ol > li {
@@ -106,11 +122,11 @@ export default {
     justify-content: center;
 }
 
-.thumbnail-list .auto-flow-columns {
+.thumbnail-list-auto-flow-columns {
     grid-auto-flow: column;
 }
 
-.thumbnail-list .auto-flow-rows {
+.thumbnail-list-auto-flow-rows {
     grid-auto-flow: row;
 }
 
@@ -133,38 +149,4 @@ export default {
     max-width: 100%;
     max-height: 100%;
 }
-
-/*
-
-.thumbnail-list:not(.thumbnail-list-grid) > *:not {
-    padding-right: 10px;
-    padding-bottom: 10px;
-}
-
-.thumbnail-list:not(.thumbnail-list-grid) > *:first-child:last-child {
-    padding: 0;
-}
-
-.thumbnail-list.thumbnail-list-fill,
-.thumbnail-list.thumbnail-list-wrap {
-    flex-flow: row wrap;
-}
-
-.thumbnail-list.thumbnail-list-noflex > * {
-    flex: 0;
-}
-
-.thumbnail-list.thumbnail-list-fill > * {
-    flex: 1 0 auto;
-}
-
-.thumbnail-list.thumbnail-list-wrap > * {
-    flex: 0 0 auto;
-}
-
-.thumbnail-list.thumbnail-list-flex > * {
-    flex: 1;
-}
-
-*/
 </style>
