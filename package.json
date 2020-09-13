@@ -1,6 +1,6 @@
 {
   "name": "@vue-interface/thumbnail-list",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A Vue thumbnail list component.",
   "main": "index.js",
   "scripts": {
