@@ -636,6 +636,66 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
+/***/ "60da":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__("83ab");
+var fails = __webpack_require__("d039");
+var objectKeys = __webpack_require__("df75");
+var getOwnPropertySymbolsModule = __webpack_require__("7418");
+var propertyIsEnumerableModule = __webpack_require__("d1e7");
+var toObject = __webpack_require__("7b0b");
+var IndexedObject = __webpack_require__("44ad");
+
+var nativeAssign = Object.assign;
+var defineProperty = Object.defineProperty;
+
+// `Object.assign` method
+// https://tc39.github.io/ecma262/#sec-object.assign
+module.exports = !nativeAssign || fails(function () {
+  // should have correct order of operations (Edge bug)
+  if (DESCRIPTORS && nativeAssign({ b: 1 }, nativeAssign(defineProperty({}, 'a', {
+    enumerable: true,
+    get: function () {
+      defineProperty(this, 'b', {
+        value: 3,
+        enumerable: false
+      });
+    }
+  }), { b: 2 })).b !== 1) return true;
+  // should work with symbols and should have deterministic property order (V8 bug)
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line no-undef
+  var symbol = Symbol();
+  var alphabet = 'abcdefghijklmnopqrst';
+  A[symbol] = 7;
+  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
+  return nativeAssign({}, A)[symbol] != 7 || objectKeys(nativeAssign({}, B)).join('') != alphabet;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
+  var T = toObject(target);
+  var argumentsLength = arguments.length;
+  var index = 1;
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  var propertyIsEnumerable = propertyIsEnumerableModule.f;
+  while (argumentsLength > index) {
+    var S = IndexedObject(arguments[index++]);
+    var keys = getOwnPropertySymbols ? objectKeys(S).concat(getOwnPropertySymbols(S)) : objectKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || propertyIsEnumerable.call(S, key)) T[key] = S[key];
+    }
+  } return T;
+} : nativeAssign;
+
+
+/***/ }),
+
 /***/ "65f0":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1643,6 +1703,21 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "cca6":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__("23e7");
+var assign = __webpack_require__("60da");
+
+// `Object.assign` method
+// https://tc39.github.io/ecma262/#sec-object.assign
+$({ target: 'Object', stat: true, forced: Object.assign !== assign }, {
+  assign: assign
+});
+
+
+/***/ }),
+
 /***/ "ce4e":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1913,12 +1988,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e63f86cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ThumbnailList.vue?vue&type=template&id=32225b2a&
-var ThumbnailListvue_type_template_id_32225b2a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"thumbnail-list"},[_c('ol',{class:_vm.classes,style:(_vm.styles)},[_c('thumbnail-list-items',{attrs:{"cover":_vm.cover,"contain":_vm.contain,"fill":_vm.fill,"min-height":_vm.minHeight,"height":_vm.height,"max-height":_vm.maxHeight,"min-width":_vm.minWidth,"width":_vm.width,"max-width":_vm.maxWidth}},[_vm._t("default")],2)],1)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"49b2d194-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ThumbnailList.vue?vue&type=template&id=52b0cd9b&
+var ThumbnailListvue_type_template_id_52b0cd9b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"thumbnail-list"},[_c('ol',{staticClass:"thumbnail-list-items",class:_vm.classes,style:(_vm.styles)},[_c('thumbnail-list-items',{attrs:{"cover":_vm.cover,"fill":_vm.fill,"min-height":_vm.minHeight,"height":_vm.height,"max-height":_vm.maxHeight,"min-width":_vm.minWidth,"width":_vm.width,"max-width":_vm.maxWidth}},[_vm._t("default")],2)],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/ThumbnailList.vue?vue&type=template&id=32225b2a&
+// CONCATENATED MODULE: ./src/ThumbnailList.vue?vue&type=template&id=52b0cd9b&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -2259,16 +2334,17 @@ function transition(el, defaultValue) {
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
 var es_array_map = __webpack_require__("d81d");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.assign.js
+var es_object_assign = __webpack_require__("cca6");
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ThumbnailListItems.vue?vue&type=script&lang=js&
+
 
 
 
 /* harmony default export */ var ThumbnailListItemsvue_type_script_lang_js_ = ({
   functional: true,
   props: {
-    // contain: Boolean,
-    // cover: Boolean,
-    // fill: Boolean,
     height: [String, Number],
     maxHeight: [String, Number],
     maxWidth: [String, Number],
@@ -2295,9 +2371,9 @@ var es_array_map = __webpack_require__("d81d");
           minWidth: context.props.minWidth ? unit(context.props.minWidth) : undefined,
           maxWidth: context.props.maxWidth ? unit(context.props.maxWidth) : undefined
         },
-        "class": {
+        "class": Object.assign({
           'thumbnail-list-item': true
-        }
+        }, context.data["class"])
       }, [child]);
     });
   }
@@ -2446,7 +2522,6 @@ var component = normalizeComponent(
 //
 //
 //
-//
 
 
 /* harmony default export */ var ThumbnailListvue_type_script_lang_js_ = ({
@@ -2463,7 +2538,10 @@ var component = normalizeComponent(
     minHeight: [String, Number],
     minWidth: [String, Number],
     maxHeight: [String, Number],
-    maxWidth: [String, Number],
+    maxWidth: {
+      type: [String, Number],
+      "default": '125px'
+    },
     rows: [String, Number],
     width: [String, Number],
     wrap: Boolean
@@ -2513,7 +2591,7 @@ var ThumbnailListvue_type_style_index_0_lang_css_ = __webpack_require__("dea0");
 
 var ThumbnailList_component = normalizeComponent(
   src_ThumbnailListvue_type_script_lang_js_,
-  ThumbnailListvue_type_template_id_32225b2a_render,
+  ThumbnailListvue_type_template_id_52b0cd9b_render,
   staticRenderFns,
   false,
   null,

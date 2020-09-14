@@ -1,9 +1,8 @@
 <template>
     <div class="thumbnail-list">
-        <ol :class="classes" :style="styles">
+        <ol class="thumbnail-list-items" :class="classes" :style="styles">
             <thumbnail-list-items
                 :cover="cover"
-                :contain="contain"
                 :fill="fill"
                 :min-height="minHeight"
                 :height="height"
@@ -47,7 +46,10 @@ export default {
 
         maxHeight: [String, Number],
 
-        maxWidth: [String, Number],
+        maxWidth: {
+            type: [String, Number],
+            default: '125px'
+        },
 
         rows: [String, Number],
 
@@ -97,18 +99,18 @@ export default {
 </script>
 
 <style>
-.thumbnail-list > ol {
+.thumbnail-list .thumbnail-list-items {
     margin: 0;
     padding: 0;
     width: 100%;
     grid-gap: .5rem;
 }
 
-.thumbnail-list > ol:not(.thumbnail-list-grid) {
+.thumbnail-list .thumbnail-list-items:not(.thumbnail-list-grid) {
     display: flex;
 }
 
-.thumbnail-list > ol.thumbnail-list-wrap:not(.thumbnail-list-grid) {
+.thumbnail-list .thumbnail-list-items.thumbnail-list-wrap:not(.thumbnail-list-grid) {
     flex-wrap: wrap;
 }
 
@@ -116,10 +118,12 @@ export default {
     display: grid;
 }
 
-.thumbnail-list > ol > li {
+.thumbnail-list .thumbnail-list-item {
     display: flex;
     align-content: center;
     justify-content: center;
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .thumbnail-list-auto-flow-columns {

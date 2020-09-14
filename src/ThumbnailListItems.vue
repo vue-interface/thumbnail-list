@@ -6,9 +6,6 @@ export default {
     functional: true,
 
     props: {
-        // contain: Boolean,
-        // cover: Boolean,
-        // fill: Boolean,
         height: [String, Number],
         maxHeight: [String, Number],
         maxWidth: [String, Number],
@@ -36,9 +33,9 @@ export default {
                     minWidth: context.props.minWidth ? unit(context.props.minWidth) : undefined,
                     maxWidth: context.props.maxWidth ? unit(context.props.maxWidth) : undefined,
                 },
-                class: {
+                class: Object.assign({
                     'thumbnail-list-item': true
-                }
+                }, context.data.class)
             }, [child]);
         });
     }
